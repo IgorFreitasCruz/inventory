@@ -1,10 +1,6 @@
+from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
+                                        PermissionsMixin)
 from django.db import models
-from django.contrib.auth.models import (
-    AbstractBaseUser,
-    PermissionsMixin,
-    BaseUserManager,
-)
-
 
 ROLES = (("admin", "admin"), ("creator", "creator"), ("sales", "sales"))
 
@@ -29,10 +25,11 @@ class CustomUserManager(BaseUserManager):
         user.save()
         return user
 
+
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     fullname = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
-    role = models.CharField(max_length=8 ,choices=ROLES)
+    role = models.CharField(max_length=8, choices=ROLES)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_staff = models.BooleanField(default=False)
@@ -47,5 +44,20 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return self.email
 
     class Meta:
-        ordering = ("created_at", )
+        ordering = ("created_at",)
 
+
+class UserActivities(models.Model):
+    user = models.ForeignKey(
+        CustomUser, related_name="user_activities", null=True, on_delete=models.SET_NULL
+    )
+    email = models.EmailField()
+    fullname = models.CharField(max_length=255)
+    action = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ("-created_at",)
+
+    def __str__(self):
+        return f"{self.fullname} {self.action} em {self.created_at.strftime('%d/%m/%Y %H:%M')}"
