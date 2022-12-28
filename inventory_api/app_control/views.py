@@ -5,9 +5,9 @@ from django.db.models import Count, F, Sum
 from django.db.models.functions import Coalesce, TruncMonth
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+from user_control.models import CustomUser
 
 from inventory_api.custom_methods import IsAuthenticatedCustom
-from user_control.models import CustomUser
 from inventory_api.utils import CustomPagination, get_query
 
 from .models import Inventory, InventoryGroup, Invoice, InvoiceItems, Shop
