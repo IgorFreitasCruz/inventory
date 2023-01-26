@@ -32,7 +32,7 @@ ALLOWED_HOSTS = [config("ALLOWED_HOSTS")]
 AUTH_USER_MODEL = "user_control.CustomUser"
 
 REST_FRAMEWORK = {
-    'EXCEPTION_HANDLER': 'inventory_api.custom_methods.utils.custom_exception_handler'
+    'EXCEPTION_HANDLER': 'inventory_api.custom_methods.custom_exception_handler'
 }
 
 # Application definition
