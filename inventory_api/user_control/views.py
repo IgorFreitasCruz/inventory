@@ -53,9 +53,10 @@ class LoginView(ModelViewSet):
         valid_request.is_valid(raise_exception=True)
 
         new_user = valid_request.validated_data["is_new_user"]
+        email_lookup = valid_request.validated_data["email"]
 
         if new_user:
-            user = CustomUser.objects.filter(email=valid_request["email"])
+            user = CustomUser.objects.filter(email=email_lookup)
 
             if user:
                 user = user.first()
