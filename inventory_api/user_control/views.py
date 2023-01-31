@@ -98,7 +98,7 @@ class UpdatePasswordView(ModelViewSet):
         valid_request = self.serializer_class(data=request.data)
         valid_request.is_valid(raise_exception=True)
 
-        user = CustomUser.objects.fitler(id=valid_request.validated_data["user_id"])
+        user = CustomUser.objects.filter(id=valid_request.validated_data["user_id"])
 
         if not user:
             raise Exception("User not found")
